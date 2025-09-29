@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { 
   Menu, 
@@ -16,7 +15,6 @@ import {
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -27,12 +25,12 @@ const Navigation = () => {
   }, []);
 
   const navItems = [
-    { icon: Home, label: "Home", href: "/" },
-    { icon: Users, label: "About", href: "/about" },
-    { icon: Users, label: "Team", href: "/team" },
-    { icon: Trophy, label: "Achievements", href: "/achievements" },
-    { icon: BookOpen, label: "Publications", href: "/publications" },
-    { icon: Network, label: "Societies", href: "/societies" },
+    { icon: Home, label: "Home", href: "#home" },
+    { icon: Users, label: "About", href: "#about" },
+    { icon: Users, label: "Team", href: "#team" },
+    { icon: Trophy, label: "Achievements", href: "#achievements" },
+    { icon: BookOpen, label: "Publications", href: "#publications" },
+    { icon: Network, label: "Societies", href: "#societies" },
   ];
 
   const societies = [
@@ -51,7 +49,7 @@ const Navigation = () => {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-3 animate-fade-in-scale">
+          <div className="flex items-center space-x-3 animate-fade-in-scale">
             <div className="w-10 h-10 bg-gradient-hero rounded-lg flex items-center justify-center animate-pulse-3d">
               <span className="text-white font-bold text-lg">IEEE</span>
             </div>
@@ -63,21 +61,19 @@ const Navigation = () => {
                 Innovation • Excellence • Leadership
               </p>
             </div>
-          </Link>
+          </div>
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center space-x-1">
             {navItems.map((item) => (
-              <Link
+              <a
                 key={item.label}
-                to={item.href}
-                className={`flex items-center space-x-2 px-4 py-2 rounded-lg ieee-hover text-sm font-medium transition-colors hover:bg-muted ${
-                  location.pathname === item.href ? 'bg-muted text-primary' : ''
-                }`}
+                href={item.href}
+                className="flex items-center space-x-2 px-4 py-2 rounded-lg ieee-hover text-sm font-medium transition-colors hover:bg-muted"
               >
                 <item.icon className="w-4 h-4" />
                 <span>{item.label}</span>
-              </Link>
+              </a>
             ))}
           </div>
 
@@ -110,17 +106,15 @@ const Navigation = () => {
             <div className="container mx-auto px-4 py-4">
               <div className="space-y-2">
                 {navItems.map((item) => (
-                  <Link
+                  <a
                     key={item.label}
-                    to={item.href}
-                    className={`flex items-center space-x-3 p-3 rounded-lg ieee-hover hover:bg-muted transition-colors ${
-                      location.pathname === item.href ? 'bg-muted text-primary' : ''
-                    }`}
+                    href={item.href}
+                    className="flex items-center space-x-3 p-3 rounded-lg ieee-hover hover:bg-muted transition-colors"
                     onClick={() => setIsOpen(false)}
                   >
                     <item.icon className="w-4 h-4" />
                     <span className="font-medium">{item.label}</span>
-                  </Link>
+                  </a>
                 ))}
                 
                 {/* IEEE Societies Submenu */}
@@ -129,14 +123,14 @@ const Navigation = () => {
                     IEEE Societies
                   </p>
                   {societies.map((society) => (
-                    <Link
+                    <a
                       key={society}
-                      to="/societies"
+                      href={`#${society.toLowerCase().replace(/\s+/g, '-')}`}
                       className="block p-2 text-sm rounded ieee-hover hover:bg-muted transition-colors"
                       onClick={() => setIsOpen(false)}
                     >
                       {society}
-                    </Link>
+                    </a>
                   ))}
                 </div>
                 
